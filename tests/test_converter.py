@@ -126,6 +126,8 @@ class MappingTests(unittest.TestCase):
             "minecraft:end_stone": MappedNode("mcl_end:end_stone"),
             "minecraft:white_concrete": MappedNode("mcl_colorblocks:concrete_white"),
             "minecraft:pink_wool": MappedNode("mcl_wool:pink"),
+            "minecraft:blackstone": MappedNode("mcl_blackstone:blackstone"),
+            "minecraft:nether_wart_block": MappedNode("mcl_nether:nether_wart_block"),
         }
 
         for raw_state, expected in cases.items():
