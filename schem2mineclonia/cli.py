@@ -12,9 +12,12 @@ from .sponge import UnsupportedSchematicFormat, load_schematic
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Convert Sponge Minecraft .schem files to Mineclonia .mts schematics."
+        description="Convert Minecraft .schem, .schematic, and .litematic files to Mineclonia .mts schematics."
     )
-    parser.add_argument("input", help="Input Sponge schematic (.schem)")
+    parser.add_argument(
+        "input",
+        help="Input Minecraft schematic (.schem, .schematic, or .litematic)",
+    )
     parser.add_argument(
         "output",
         nargs="?",

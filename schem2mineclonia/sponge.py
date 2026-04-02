@@ -1,33 +1,15 @@
-"""Load Sponge schematic files."""
+"""Load Minecraft schematic files into the shared palette model."""
 
 from __future__ import annotations
 
 import gzip
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from .legacy import load_legacy_schematic
+from .litematic import load_litematic
+from .model import MinecraftSchematic, UnsupportedSchematicFormat
 from .nbt import NBTDocument, NBTError, decode_varints, read_nbt_document
-
-
-class UnsupportedSchematicFormat(ValueError):
-    """Raised when the input is a Minecraft schematic we do not support."""
-
-
-@dataclass(frozen=True)
-class MinecraftSchematic:
-    """A palette-based Minecraft schematic in Sponge block order."""
-
-    width: int
-    height: int
-    length: int
-    palette: list[str]
-    block_indices: list[int]
-    version: int
-    data_version: int | None
-    block_entities_count: int
-    entities_count: int
-    offset: tuple[int, int, int]
 
 
 def load_schematic(path: str | Path) -> MinecraftSchematic:
@@ -39,11 +21,11 @@ def load_schematic(path: str | Path) -> MinecraftSchematic:
     document = read_nbt_document(raw)
     root = _resolve_schematic_root(document)
 
+    if _looks_like_litematic(root):
+        return load_litematic(root)
+
     if "Materials" in root:
-        raise UnsupportedSchematicFormat(
-            "Legacy .schematic files are not supported yet. "
-            "Re-export as Sponge .schem from WorldEdit or Amulet first."
-        )
+        return load_legacy_schematic(root)
 
     version = int(root.get("Version", 1))
     if version in {1, 2}:
@@ -53,6 +35,12 @@ def load_schematic(path: str | Path) -> MinecraftSchematic:
 
     raise UnsupportedSchematicFormat(
         f"Unsupported Sponge schematic version: {version}"
+    )
+
+
+def _looks_like_litematic(root: dict[str, Any]) -> bool:
+    return isinstance(root.get("Regions"), dict) and isinstance(
+        root.get("Metadata"), dict
     )
 
 

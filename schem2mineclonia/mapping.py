@@ -18,6 +18,30 @@ COLOR_ALIASES = {"gray": "grey", "light_gray": "silver"}
 WOOD_ALIASES = {"cherry": "cherry_blossom"}
 CRIMSON_STEMS = {"crimson_stem": "crimson", "warped_stem": "warped"}
 HYPHAE_BLOCKS = {"crimson_hyphae": "crimson", "warped_hyphae": "warped"}
+WOOD_STAIR_BASES = {
+    "oak",
+    "spruce",
+    "birch",
+    "jungle",
+    "acacia",
+    "dark_oak",
+    "mangrove",
+    "cherry",
+    "bamboo",
+    "crimson",
+    "warped",
+}
+STAIR_BASE_ALIASES = {
+    "brick": "bricks",
+    "stone_brick": "stone_bricks",
+    "mossy_stone_brick": "mossy_stone_bricks",
+    "nether_brick": "nether_bricks",
+    "red_nether_brick": "red_nether_bricks",
+    "end_stone_brick": "end_stone_bricks",
+    "prismarine_brick": "prismarine_bricks",
+    "quartz": "quartz_block",
+    "purpur": "purpur_block",
+}
 
 
 DIRECT_NODE_MAP = {
@@ -105,6 +129,7 @@ DIRECT_NODE_MAP = {
     "soul_sand": "mcl_nether:soul_sand",
     "quartz_block": "mcl_nether:quartz_block",
     "chiseled_quartz_block": "mcl_nether:quartz_chiseled",
+    "quartz_pillar": "mcl_nether:quartz_pillar",
     "smooth_quartz": "mcl_nether:quartz_smooth",
     "blackstone": "mcl_blackstone:blackstone",
     "prismarine": "mcl_ocean:prismarine",
@@ -115,8 +140,13 @@ DIRECT_NODE_MAP = {
     "bookshelf": "mcl_books:bookshelf",
     "note_block": "mcl_noteblock:noteblock",
     "jukebox": "mcl_jukebox:jukebox",
+    "sponge": "mcl_sponges:sponge",
+    "wet_sponge": "mcl_sponges:sponge_wet",
     "moss_block": "mcl_lush_caves:moss",
     "dripstone_block": "mcl_dripstone:dripstone_block",
+    "dead_bush": "mcl_core:deadbush",
+    "short_grass": "mcl_flowers:tallgrass",
+    "fern": "mcl_flowers:fern",
 }
 
 
@@ -248,7 +278,7 @@ class MinecloniaMapper:
             return None
 
         param2 = 0
-        if block.name in {"deepslate", "purpur_pillar"}:
+        if block.name in {"deepslate", "purpur_pillar", "quartz_pillar"}:
             param2 = axis_to_param2(block.properties.get("axis"))
         if block.name == "purpur_pillar":
             node_name = "mcl_end:purpur_pillar"
@@ -283,6 +313,7 @@ class MinecloniaMapper:
 
         for suffix, template in (
             ("_wool", "mcl_wool:{color}"),
+            ("_carpet", "mcl_wool:{color}_carpet"),
             ("_terracotta", "mcl_colorblocks:hardened_clay_{color}"),
             ("_concrete", "mcl_colorblocks:concrete_{color}"),
             ("_concrete_powder", "mcl_colorblocks:concrete_powder_{color}"),
@@ -431,11 +462,7 @@ class MinecloniaMapper:
         if base.endswith("_cut_copper") or base.endswith("_chiseled_copper") or base.endswith("_grate_copper"):
             return None
 
-        material = None
-        if base.endswith("_planks"):
-            material = normalize_wood(base[: -len("_planks")])
-        else:
-            material = STAIR_MATERIALS.get(base)
+        material = stair_material(base)
 
         if material is None:
             return None
@@ -460,11 +487,7 @@ class MinecloniaMapper:
         if base.endswith("_cut_copper") or base.endswith("_chiseled_copper") or base.endswith("_grate_copper"):
             return None
 
-        material = None
-        if base.endswith("_planks"):
-            material = normalize_wood(base[: -len("_planks")])
-        else:
-            material = STAIR_MATERIALS.get(base)
+        material = stair_material(base)
 
         if material is None:
             return None
@@ -516,6 +539,14 @@ def normalize_wood(wood: str) -> str:
 
 def axis_to_param2(axis: str | None) -> int:
     return AXIS_PARAM2.get(axis or "y", 0)
+
+
+def stair_material(base: str) -> str | None:
+    if base.endswith("_planks"):
+        return normalize_wood(base[: -len("_planks")])
+    if base in WOOD_STAIR_BASES:
+        return normalize_wood(base)
+    return STAIR_MATERIALS.get(STAIR_BASE_ALIASES.get(base, base))
 
 
 def direction_to_facedir(direction: str | None) -> int:
