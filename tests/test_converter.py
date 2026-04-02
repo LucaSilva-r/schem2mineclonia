@@ -317,6 +317,104 @@ class MappingTests(unittest.TestCase):
                 "mcl_stairs:slab_dark_oak_double"
             ),
             "minecraft:light_blue_carpet": MappedNode("mcl_wool:light_blue_carpet"),
+            "minecraft:smooth_stone_slab[type=top,waterlogged=false]": MappedNode(
+                "mcl_stairs:slab_stone_top"
+            ),
+            "minecraft:glowstone": MappedNode("mcl_nether:glowstone"),
+            "minecraft:iron_bars[east=true,north=true,south=false,waterlogged=false,west=true]": MappedNode(
+                "mcl_panes:bar"
+            ),
+            "minecraft:wall_torch[facing=west]": MappedNode(
+                "mcl_torches:torch_wall",
+                param2=2,
+            ),
+            "minecraft:cobblestone_wall[east=low,north=none,south=low,up=true,waterlogged=false,west=none]": MappedNode(
+                "mcl_walls:cobble"
+            ),
+            "minecraft:stone_brick_wall[east=tall,north=none,south=none,up=false,waterlogged=false,west=tall]": MappedNode(
+                "mcl_walls:stonebrick"
+            ),
+            "minecraft:shroomlight": MappedNode("mcl_crimson:shroomlight"),
+            "minecraft:grass": MappedNode("mcl_flowers:tallgrass"),
+            "minecraft:poppy": MappedNode("mcl_flowers:poppy"),
+            "minecraft:peony[half=lower]": MappedNode("mcl_flowers:peony"),
+            "minecraft:peony[half=upper]": MappedNode("mcl_flowers:peony_top"),
+            "minecraft:black_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]": MappedNode(
+                "mcl_panes:pane_black"
+            ),
+            "minecraft:glass_pane[east=false,north=true,south=false,waterlogged=false,west=false]": MappedNode(
+                "mcl_panes:pane_natural"
+            ),
+            "minecraft:light_gray_wall_banner[facing=east]": MappedNode(
+                "mcl_banners:hanging_banner",
+                param2=3,
+            ),
+            "minecraft:barrel[facing=east,open=false]": MappedNode(
+                "mcl_barrels:barrel_closed",
+                param2=1,
+            ),
+            "minecraft:beehive[honey_level=2,facing=west]": MappedNode(
+                "mcl_beehives:beehive_2",
+                param2=3,
+            ),
+            "minecraft:bee_nest[honey_level=5,facing=south]": MappedNode(
+                "mcl_beehives:bee_nest_5",
+                param2=2,
+            ),
+            "minecraft:chiseled_bookshelf[facing=south,slot_0_occupied=true]": MappedNode(
+                "mcl_books:chiseled_bookshelf",
+                param2=2,
+            ),
+            "minecraft:lightning_rod[facing=down,powered=true,waterlogged=false]": MappedNode(
+                "mcl_lightning_rods:rod_powered",
+                param2=20,
+            ),
+            "minecraft:waxed_weathered_lightning_rod[facing=east,powered=false,waterlogged=false]": MappedNode(
+                "mcl_lightning_rods:rod_weathered_preserved",
+                param2=12,
+            ),
+            "minecraft:copper_bulb[lit=false,powered=true]": MappedNode(
+                "mcl_copper:bulb_off_powered"
+            ),
+            "minecraft:waxed_oxidized_copper_grate": MappedNode(
+                "mcl_copper:block_oxidized_grate_preserved"
+            ),
+            "minecraft:farmland[moisture=7]": MappedNode("mcl_farming:soil_wet"),
+            "minecraft:bone_block[axis=z]": MappedNode(
+                "mcl_core:bone_block",
+                param2=4,
+            ),
+            "minecraft:hay_block[axis=x]": MappedNode(
+                "mcl_farming:hay_block",
+                param2=12,
+            ),
+            "minecraft:bamboo_mosaic": MappedNode("mcl_bamboo:bamboo_mosaic"),
+            "minecraft:bamboo_mosaic_stairs[facing=east,half=bottom,shape=straight]": MappedNode(
+                "mcl_stairs:stair_bamboo_mosaic",
+                param2=1,
+            ),
+            "minecraft:cut_sandstone_slab[type=double]": MappedNode(
+                "mcl_stairs:slab_sandstone_double"
+            ),
+            "minecraft:small_dripleaf[facing=west,half=upper,waterlogged=false]": MappedNode(
+                "mcl_lush_caves:dripleaf_small",
+                param2=3,
+            ),
+            "minecraft:cave_vines[berries=true]": MappedNode(
+                "mcl_lush_caves:cave_vines_lit"
+            ),
+            "minecraft:tall_grass[half=upper]": MappedNode(
+                "mcl_flowers:double_grass_top"
+            ),
+            "minecraft:large_fern[half=lower]": MappedNode(
+                "mcl_flowers:double_fern"
+            ),
+            "minecraft:ancient_debris": MappedNode("mcl_nether:ancient_debris"),
+            "minecraft:nether_gold_ore": MappedNode("mcl_blackstone:nether_gold"),
+            "minecraft:azalea": MappedNode("mcl_lush_caves:azalea"),
+            "minecraft:flowering_azalea": MappedNode(
+                "mcl_lush_caves:azalea_flowering"
+            ),
         }
 
         for raw_state, expected in cases.items():
